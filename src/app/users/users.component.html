@@ -1,0 +1,115 @@
+<div class="container">
+  <h5 style="font-size:15px" class="mt-4">NGRX Demo Project</h5>
+  <hr>
+<div class='card'>
+    <div class='card-header'>
+      {{pageTitle}}
+    </div>
+    <div class='card-body'>
+    
+
+      <div class='table-responsive'>
+        <table class='table' *ngIf='users && users.length'>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Company</th>
+              <th>Email</th>
+              <th>Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let user of users;let i=index'>
+              <td>
+                {{i+skip+1}}
+              </td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.company}}</td>
+                <td>{{ user.email}}</td>
+                <td>{{ user.age }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+  <div *ngIf='errorMessage'
+       class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>
+
+  <h5 style="font-size:15px" class="mt-4">Angular Material Form Fields</h5>
+  <hr>
+  <div class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="Input">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-select placeholder="Select">
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <h5 style="font-size:15px" class="mt-4">Angular Material Tab</h5>
+  <hr>
+  <mat-tab-group>
+    <mat-tab label="Tab 1">Content 1</mat-tab>
+    <mat-tab label="Tab 2">Content 2</mat-tab>
+    <mat-tab label="Tab 3">Content 3</mat-tab>
+    <mat-tab label="Tab 4">Content 4</mat-tab>
+  </mat-tab-group>
+  <h5 style="font-size:15px" class="mt-4">Angular Material Autocomplete</h5>
+  <hr>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <h5 style="font-size:15px" class="mt-4">Angular Material Menu</h5>
+  <hr>
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+  
+<h5 style="font-size:15px" class="mt-4">Angular Material Dialog</h5>
+  <hr>
+  <button mat-raised-button color="primary" (click)="openDialog()">Open dialog</button>
+  <!-- <h5 style="font-size:15px" class="mt-4">Leaflat Map</h5>
+  <hr>
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  
+  </div> -->
+  <h5 style="font-size:15px" class="mt-4">Chart</h5>
+  <hr>
+  <div>
+    <div style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+
