@@ -1,0 +1,150 @@
+.wrapper > div {
+    flex-direction: column;
+  }
+  
+  .title {
+    display: inline-block;
+    line-height: 14px;
+    font-weight: 400;
+  }
+  
+  .input {
+    height: 40px;
+    outline: none;
+    border: 1px solid #CBCBCB;
+    background: #ffffff;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    font-size: 12px;
+    width: 100%;
+    color: black;
+  }
+  
+  .input:focus {
+    border-color: #0086da;
+  }
+  
+  .outline-error {
+    border-color: #f44336 !important;
+  }
+  
+  .error {
+    color: #f44336;
+    margin-top: 7px;
+  }
+  
+  .error > span {
+    margin-left: 5px;
+  }
+  
+  .error > mat-icon {
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    font-size: 16px;
+  }
+  
+  .camera {
+    padding: 10px 0px;
+    border: 1px dashed #0086da;
+    color: #0086da;
+    width: 100%;
+  }
+  
+  .mat-checkbox {
+    font-size: 14px;
+    margin-right: 16px;
+  }
+  
+  .actions {
+    position: absolute;
+    z-index: 2;
+    background: #ffffff;
+    top: 0px;
+    right: 3px;
+    height: 38px;
+    color: #8c9ba5;
+  }
+  
+  .btn {
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+  }
+  
+  .btn mat-icon {
+    height: 16px;
+    font-size: 16px;
+    width: 16px;
+    line-height: 16px;
+  }
+  
+  .fab-btn {
+    background: #ffffff;
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+  }
+  
+  .fab-btn mat-icon {
+    color: #0086da;
+    height: 18px;
+    font-size: 18px;
+    width: 18px;
+  }
+  
+  ::ng-deep .mat-fab .mat-button-wrapper {
+    padding: 0px !important;
+  }
+  
+  .edit-icon{
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    line-height: 14px;
+  }
+  
+  ::ng-deep .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
+    background-color: #0086da;
+  }
+  
+  ::ng-deep
+    .mat-radio-button.mat-accent.mat-radio-checked
+    .mat-radio-outer-circle {
+    border-color: #0086da;
+  }
+  
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #0086da;
+  }
+  
+  .edit-text-custom-field{
+    padding: 10px;
+    position: fixed;
+    padding-top: 20px;
+    z-index: 1000;
+    width: 25%;
+    top: 40%;
+    background-color: white;
+    left: 35%;
+    box-shadow: 0px 1px 5px;
+  }
+  
+  .post-button{
+    min-width: 0px;
+    height: 35px;
+    align-self: flex-end;
+  }
+  
+  .unabled-button{
+    background-color: #0086da;
+    color: #ffffff;
+  }
+  
+  .disabled-button{
+    background-color:lightgray;
+    color: #ffffff;
+  }
+  

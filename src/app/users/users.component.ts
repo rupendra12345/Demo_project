@@ -7,6 +7,12 @@ import {FormControl} from '@angular/forms';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogBodyComponent } from '../dialog-body/dialog-body.component';
 import * as L from 'leaflet';
+import { Observable } from 'rxjs';
+import { map, shareReplay, tap } from 'rxjs/operators';
+import { bpCustomFieldSelector } from '../user.selectors';
+import { BusinessPartnerDialogComponent } from '../business-partner-dialog/business-partner-dialog.component';
+import { AddBpCustomFieldsAction } from '../user.actions';
+import { BusinessPartnerService } from '../servive/business-partner.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -19,8 +25,9 @@ export class UsersComponent implements OnInit,AfterViewInit{
   users: IUser[] = [];
   userFilter = "";
   skip:number = 0;
-
-  constructor(private store: Store,private matDialog: MatDialog) { }
+  customFields$: Observable<any[]>;
+  customFields: any[];
+  constructor(private store: Store,private matDialog: MatDialog, private service:BusinessPartnerService) { }
 
   myControl: FormControl = new FormControl();
 
@@ -32,7 +39,13 @@ export class UsersComponent implements OnInit,AfterViewInit{
  
 
   ngOnInit(): void {
-
+    this.store.dispatch(new UserActions.FetchBpCustomFieldsAction(null));
+    this.customFields$ = this.store.select(bpCustomFieldSelector).pipe(
+      tap((cf) =>{ (this.customFields = cf), console.log('cf',this.customFields)}),
+      
+      shareReplay(1)   
+    );
+   
     this.store.dispatch(new UserActions.LoadUsers()); // action dispatch
 
     this.store.pipe(select(fromUser.getUsers)).subscribe(
@@ -47,6 +60,45 @@ export class UsersComponent implements OnInit,AfterViewInit{
       }
     )
 
+  }
+  addCustomFields() {
+    let dialogRef = this.matDialog.open(
+      BusinessPartnerDialogComponent,
+      {
+        width: "800px",
+        height: "600px"
+      }
+    );
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res && res.action === 'addCustomField') {
+        this.store.dispatch(new AddBpCustomFieldsAction(res.customField));
+          // action: "addCustomField",
+          // payload: res.customField,
+      
+      }
+      // if (res && res.action === 'updateCustomField') {
+      //   this.store.dispatch(new UpdateBpCustomFieldsAction(res.customField));
+       
+      
+      // }
+    })
+  }
+  async editCf(cfObj: any) {
+    let data = await this.service
+      .fetchCfDetails(cfObj.uuid)
+      .pipe(map((res: any) => res.data))
+      .toPromise();
+
+    
+
+    this.matDialog.open(BusinessPartnerDialogComponent, {
+      width: "800px",
+      height: "600px",
+      data: data,
+    });
+  }
+  deleteField(uuid: string) {
+    // this._store.dispatch(new DeleteBpSettingCustomField(uuid));
   }
   private map;
 

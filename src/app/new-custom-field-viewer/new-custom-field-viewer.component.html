@@ -1,0 +1,161 @@
+<ng-container *ngIf="cfData">
+    <div class="wrapper">
+      <div class="df">
+        <div class="df ai" style="padding-bottom: 5px;">
+          <span class="sf dt title">{{ cfData?.fieldKey }}</span>
+          <mat-icon *ngIf="cfData?.fieldType === 'url'" class="edit-icon cp" style="margin-left: 15px;"
+            (click)="editUrl()">edit</mat-icon>
+            <mat-icon *ngIf="cfData?.fieldType === 'text'  && isAllowed " class="edit-icon cp" style="margin-left: auto;"
+            (click)="editTextBoxView = !editTextBoxView;editText = cfData?.value">launch</mat-icon>
+        </div>
+  
+        <div *ngIf="
+            cfData?.fieldType === 'string' ||
+            cfData?.fieldType === 'address' ||
+            cfData?.fieldType === 'text' ||
+            cfData?.fieldType === 'contactNo' ||
+            cfData?.fieldType === 'email' ||
+            cfData?.fieldType === 'weight'
+          " style="position: relative;">
+          <input matInput autocomplete="off" class="input" [ngClass]="{
+              'outline-error':
+                error || (cfData?.fieldType === 'email' && !isEmailValid && isDirty)
+            }" (focus)="inputFocused()" (blur)="inputFocusOut()" (keyup)="keyup($event)" [value]="cfData?.value"
+            />
+  
+          <div class="df ai actions" *ngIf="isDirty">
+            <button mat-icon-button class="btn" (click)="resetValue()">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <span style="padding: 0px 5px;"> | </span>
+            <button mat-icon-button class="btn" (click)="inputFocusOut()">
+              <mat-icon style="color: #5aa700;">check</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div *ngIf="cfData?.fieldType === 'number'" style="position: relative;">
+          <input matInput autocomplete="off" type="number" class="input" [ngClass]="{
+            'outline-error':
+              error || (cfData?.fieldType === 'email' && !isEmailValid && isDirty)
+          }" (focus)="inputFocused()" (blur)="inputFocusOut()" (keyup)="keyup($event)" [value]="cfData?.value"
+             />
+  
+          <div class="df ai actions" *ngIf="isDirty">
+            <button mat-icon-button class="btn" (click)="resetValue()">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <span style="padding: 0px 5px;"> | </span>
+            <button mat-icon-button class="btn" (click)="inputFocusOut()">
+              <mat-icon style="color: #5aa700;">check</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div class="df ai input" style="overflow: hidden;" *ngIf="cfData?.fieldType === 'url' && !showUrlInput">
+          <a href="{{cfData?.value}}" target="_blank" style="color: black;">{{cfData?.value}}</a>
+        </div>
+  
+        <div class="df ai" *ngIf="cfData?.fieldType === 'url' && showUrlInput">
+          <input class="input" [(ngModel)]="cfData.value" (blur)="inputFocusOut()">
+        </div>
+  
+        <!-- <div *ngIf="cfData?.fieldType === 'dateTime'">
+          <input matInput autocomplete="off" class="input" [ngClass]="{ 'outline-error': error }" (blur)="inputFocusOut()"
+            (focus)="inputFocused()" [owlDateTimeTrigger]="dt1" [(ngModel)]="cfDate" [owlDateTime]="dt1"
+            (dateTimeChange)="dateTimeChange($event)" />
+  
+          <owl-date-time #dt1></owl-date-time>
+        </div>
+  
+        <div *ngIf="cfData?.fieldType === 'date'">
+          <input matInput autocomplete="off" class="input" [ngClass]="{ 'outline-error': error }" (blur)="inputFocusOut()"
+            (focus)="inputFocused()" [owlDateTimeTrigger]="dt2" [(ngModel)]="cfDate" [owlDateTime]="dt2"
+            (dateTimeChange)="dateTimeChange($event)"/>
+  
+          <owl-date-time #dt2 pickerType="calendar"></owl-date-time>
+        </div> -->
+  
+        <div *ngIf="cfData?.fieldType === 'select' || cfData?.fieldType === 'yes-no'">
+          <mat-select [multiple]="cfData?.multiple" [(ngModel)]="selectOption" name="Select cf" class="input"
+            [ngClass]="{ 'outline-error': error }" (focus)="inputFocused()" (blur)="selectionOutofFocuse()"
+            style="line-height: 40px;" (selectionChange)="selectionChange($event)"
+            >
+            <mat-option *ngFor="let option of cfData?.options" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </div>
+  
+        <!-- <div *ngIf="cfData?.fieldType === 'camera'">
+          <app-webcamera-viewer [cfSchema]="cfData" [isAllowed]='isAllowed' (snapEmit)="snapValue($event)">
+          </app-webcamera-viewer>
+        </div>
+  
+        <div *ngIf="cfData?.fieldType === 'file'">
+          <app-webcamera-viewer [cfSchema]="cfData" [isAllowed]='isAllowed' (snapEmit)="snapValue($event)">
+          </app-webcamera-viewer>
+        </div> -->
+  
+        <div *ngIf="cfData?.fieldType === 'checkbox'">
+          <div class="df ai" style="flex-wrap: wrap;">
+            <mat-checkbox *ngFor="let option of cfData?.options" [checked]="cfData.value"
+              (change)="optionChanged($event)" [value]="option">{{ option }}
+            </mat-checkbox>
+          </div>
+        </div>
+  
+        <div *ngIf="cfData?.fieldType === 'radio-button'">
+          <mat-radio-group (change)="singleSelectionChange($event)" [(ngModel)]="cfData.value" class="df ai mf"
+            style="flex-wrap: wrap;">
+            <mat-radio-button *ngFor="let option of cfData?.options" [value]="option" style="margin-right: 10px;">
+              {{ option }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+  
+        <div *ngIf="cfData?.fieldType === 'counter'">
+          <div class="df ai">
+            <button mat-fab class="fab-btn" (click)="decrement()">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input type="number" class="mf dt" [value]="cfData?.value" style="width: 30px; text-align: center;" />
+  
+            <button mat-fab class="fab-btn">
+              <mat-icon (click)="increment()">add</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div *ngIf="error || (cfData?.fieldType === 'email' && !isEmailValid && isDirty) || isMandatory"
+          class="df ai error">
+          <mat-icon>warning</mat-icon>
+          <span class="sf">{{
+            cfData?.fieldType === "email" && !isEmailValid
+              ? "Not a valid email"
+              : "This field is mandatory"
+          }}</span>
+        </div>
+  
+        <!-- <div *ngIf="!isPermitted" class="sf error">
+          <span>Permission not granted !</span>
+        </div> -->
+      </div>
+    </div>
+  </ng-container>
+  
+  <div *ngIf="editTextBoxView" class="edit-text-custom-field">
+    <div style="min-height: 180px;">
+      <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>{{cfData?.fieldKey}}</mat-label>
+        <textarea matInput [(ngModel)]="editText" style="height: 120px;"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="df ai jc" style="padding: 5px 0px">
+      <button mat-button (click)="editTextBoxView = !editTextBoxView">Minimize</button>
+      <button class="post-button" mat-stroked-button
+        [ngClass]="(this.editText != this.previuosValue) ? 'unabled-button' : 'disabled-button'"
+        [disabled]="!(this.editText != this.previuosValue)" (click)="postEditText()">
+        POST
+      </button>
+    </div>
+  </div>
