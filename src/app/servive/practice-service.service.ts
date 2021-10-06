@@ -13,4 +13,7 @@ export class PracticeServiceService {
   secondapi(){
     return this.http.get('https://rickandmortyapi.com/api/character/5')
   }
+  thirdapi(){
+    return this.http.get('assets/users.json')
+  }
 }

@@ -1,0 +1,108 @@
+<div class="wrapper">
+    <div>
+      <mat-form-field>
+        <mat-select
+          placeholder="Select field type"
+          name="fieldType"
+          (selectionChange)="selectionChange($event)"
+          [(ngModel)]="selectedField"
+        >
+          <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+            {{ fieldType?.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="customField?.fieldType">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Enter field name"
+            [(ngModel)]="customField.fieldKey"
+            [disabled]="!customField?.fieldType"
+            required
+            name="field-name"
+            autocomplete="off"
+            (keyup)="onKeyup()"
+          />
+          <mat-checkbox
+            *ngIf="customField.fieldType === 'select'"
+            (change)="changeMultiple()"
+            [checked]="customField?.multiple"
+            matSuffix
+            class="sf pc"
+            >Multiple Selection</mat-checkbox
+          >
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Enter Description"
+            [(ngModel)]="customField.description"
+            name="description"
+            autocomplete="off"
+            (keyup)="onKeyup()"
+          />
+        </mat-form-field>
+      </ng-container>
+    </div>
+    <div
+      *ngIf="
+        customField?.fieldType === 'radio-button' ||
+        customField?.fieldType === 'checkbox' ||
+        customField?.fieldType === 'select' ||
+        customField?.fieldType === 'yes-no'
+      "
+      class="options-and-btn"
+    >
+      <div
+        *ngFor="
+          let option of customField?.options;
+          let i = index;
+          trackBy: trackBy
+        "
+        class="df ai"
+      >
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="customField.options[i]"
+            placeholder="Option {{ i + 1 }}"
+            autocomplete="off"
+            [disabled]="customField?.fieldType === 'yes-no'"
+          />
+        </mat-form-field>
+  
+        <button *ngIf="customField?.fieldType !== 'yes-no'" style="margin-left: 10px;" mat-icon-button (click)="deleteOption(option)">
+          <mat-icon class="delete-icon">delete</mat-icon>
+        </button>
+  
+        <button
+          mat-button
+          [disabled]="!option"
+          class="sf pc"
+          (click)="makeDefault(option)"
+        >
+          Make it default
+        </button>
+      </div>
+  
+      <button
+        mat-button
+        class="btn"
+        *ngIf="customField?.fieldType !== 'yes-no'"
+        (click)="addOption()"
+      >
+        Add option
+      </button>
+      <button
+        mat-button
+        class="btn"
+        style="margin-left: 10px;"
+        (click)="clearDefaultValue()"
+      >
+        Clear Default Value
+      </button>
+    </div>
+  </div>
+  

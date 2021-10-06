@@ -1,3 +1,81 @@
+
+<div class="row">
+  <div class="col-md-2 text-center vertical-line">
+    <h4 class="mt-2" style="color: blue;">Business Partner</h4>
+  </div>
+  
+  <div class="col-md-10">
+    <mat-tab-group>
+      <mat-tab label="Custom Field">
+        <button
+        mat-button
+        class="pc btn-filter"
+       
+        (click)="addCustomFields()"
+      >
+        Add Custom Field
+      </button>
+      <div class="df ai jc add-field block" style="pointer-events: none">
+        <div style="flex: 1 0 10%" class="mf dt fw">Field Key</div>
+        <div style="flex: 1 0 10%" class="mf dt fw">Field Type</div>
+        <div style="flex: 1 0 20%" class="mf dt fw">Options</div>
+        <div style="flex: 1 0 40%" class="mf dt fw">Used By</div>
+        <div style="flex: 1 0 20%"></div>
+      </div>
+      <div #container class="">
+        <!-- <div *ngFor="let item of customeFileds;"> -->
+        <div
+          *ngFor="let customField of customFields$ | async; let index = index"
+          class="df ai jc add-field block"
+        >
+          <div style="flex: 1 0 10%" class="mf not-excced-txt">
+            {{ customField?.cfs?.fieldKey }}
+          </div>
+          <div style="flex: 1 0 10%" class="mf not-excced-txt">
+            {{ customField?.cfs?.fieldType }}
+          </div>
+  
+          <div style="flex: 1 0 20%" class="mf not-excced-txt">
+            {{ customField?.cfs?.options }}
+          </div>
+          <div style="flex: 1 0 40%" class="mf not-excced-txt">
+            {{ customField?.restriction?.restrictions | usedBy }}
+          </div>
+          <div style="flex: 1 0 20%"></div>
+          <!-- <div style="flex: 1 0 20%" class="df ai action">
+            <button
+              class="icon-btn"
+              mat-icon-button
+              
+              (click)="editCf(customField)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+  
+            <button
+              class="icon-btn"
+              mat-icon-button
+              
+              (click)="
+                customField?.restriction?.restrictions &&
+                customField?.restriction?.restrictions.length > 0
+                  ? $event.preventDefault()
+                  : deleteField(customField?.uuid)
+              "
+             
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div> -->
+        </div>
+      </div>
+      </mat-tab>
+      <mat-tab label="Partner Group">Content 2</mat-tab>
+      <mat-tab label="Partner Setting">Content 3</mat-tab>
+      <mat-tab label="Partner Report">Content 4</mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
 <div class="container">
   <h5 style="font-size:15px" class="mt-4">NGRX Demo Project</h5>
   <hr>

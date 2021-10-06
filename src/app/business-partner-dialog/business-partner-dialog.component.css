@@ -1,0 +1,46 @@
+.create-btn {
+    background-color: #0086da;
+    color: #ffffff;
+    margin-left: 16px;
+  }
+  .editor-container {
+    max-width: 580px;
+    border: 1px solid #80808030;
+    padding: 16px;
+    border-radius: 5px;
+  }
+  .preview-container {
+    padding: 12px;
+    border: 1px solid #8080804f;
+    margin-bottom: 16px;
+    border-radius: 5px;
+  }
+  .header {
+    color: #152935;
+    font-size: 16px;
+    padding: 0px 12px;
+    height: 44px;
+    border-bottom: 1px solid rgba(90, 104, 114, 0.5);
+    box-sizing: border-box;
+  }
+  .header button {
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    margin-left: auto;
+  }
+  .header button mat-icon {
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 18px;
+  }
+  .container {
+    padding: 12px;
+    height: 488px;
+    overflow-y: auto;
+  }
+  .disable-btn {
+    background-color: gray !important;
+    color: #ffffff !important;
+  }

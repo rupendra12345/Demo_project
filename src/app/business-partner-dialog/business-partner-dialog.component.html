@@ -1,0 +1,60 @@
+<div>
+    <div class="header df ai">
+      <span class="lf">Add Custom Field</span>
+      <button mat-icon-button mat-dialog-close><mat-icon>clear</mat-icon></button>
+    </div>
+    <div class="container">
+        <div class="df">
+          <div style="flex: 1 0 50%; padding-right: 10px; box-sizing: border-box">
+            <span
+              class="mf fw dt"
+              style="display: inline-block; padding-bottom: 16px"
+            >
+              Setting View :
+            </span>
+            <div class="editor-container">
+              <div style="position: relative">
+                <app-new-custom-field-editor
+                  [cf]="cf"
+                  (generatedCf)="cf = $event"
+                ></app-new-custom-field-editor>
+              </div>
+            </div>
+          </div>
+    
+          <div style="flex: 1 0 50%; padding-left: 10px; box-sizing: border-box">
+            <span
+              class="mf fw dt"
+              style="display: inline-block; padding-bottom: 16px"
+              >Preview :
+            </span>
+            <div class="preview-container" style="max-width: 355px">
+              <app-new-custom-field-viewer [cf]="cf"></app-new-custom-field-viewer>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="!uuid" class="df ai actions">
+      <button mat-button mat-dialog-close class="mf pc">Cancel</button>
+      <button
+        mat-button
+        class="create-btn mf"
+        (click)="createCustomFields()"
+        [disabled]="!cf?.fieldKey"
+        [ngClass]="{ 'disable-btn': !cf?.fieldKey }"
+      >
+        Create
+      </button>
+    </div>
+    <div *ngIf="uuid" class="df ai actions">
+      <button mat-button mat-dialog-close class="mf pc">Cancel</button>
+      <button
+        mat-button
+        class="create-btn mf"
+        (click)="updateCustomFields()"
+        [disabled]="!(cf?.fieldKey && showUpdate)"
+        [ngClass]="{ 'disable-btn': !(cf?.fieldKey && showUpdate) }"
+      >
+        Update
+      </button>
+</div>

@@ -2,19 +2,17 @@ import { Action } from '@ngrx/store';
 import { IUser } from './user';
 import { UserActions, UserActionTypes } from './user.actions';
 
-export const userFeatureKey = 'usersState';
-
-export interface State {
+export interface UserState {
   users: IUser[],
   error: string
 }
 
-export const initialState: State = {
+export const initialState: UserState = {
   users: [],
   error: ''
 };
 
-export function reducer(state = initialState, action: UserActions): State {
+export function reducer(state = initialState, action: UserActions): UserState {
   switch (action.type) {
 
     case UserActionTypes.LoadUsers:

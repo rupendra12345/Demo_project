@@ -1,7 +1,7 @@
 import { formatCurrency } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { forkJoin, from, interval, of, Subscription } from 'rxjs';
-import { map, mergeMap, pluck, take, tap, toArray } from 'rxjs/operators';
+import { forkJoin, from, interval, Observable, observable, of, race, Subscription, zip } from 'rxjs';
+import { concatMap, delay, flatMap, map, mergeMap, pluck, retry, take, tap, toArray } from 'rxjs/operators';
 import { PracticeServiceService } from '../servive/practice-service.service';
 
 @Component({
@@ -12,9 +12,16 @@ import { PracticeServiceService } from '../servive/practice-service.service';
 export class EmployeeComponent implements OnInit {
    response1:any;
    response2:any;
+   response3:any;
    
    productFirst:any;
    productSecond:any;
+   productThird:any;
+
+   demodata:any;
+   demodata1:any;
+
+   practice:any
   constructor(private practiceservice:PracticeServiceService) { }
 
   users = [
@@ -53,17 +60,17 @@ export class EmployeeComponent implements OnInit {
 
     // })
 
-    const arry = ['a','b','c','d'];
-    const usertime= interval(2000);
-    let subSubscription:Subscription;
-    subSubscription = usertime.pipe(
-      tap(res=>{
-        if(res==4){
-          subSubscription.unsubscribe();
-        }
-      }),
-      map(data=>arry[data])
-    ).subscribe(res=>console.log(res))
+    // const arry = ['a','b','c','d'];
+    // const usertime= interval(2000);
+    // let subSubscription:Subscription;
+    // subSubscription = usertime.pipe(
+    //   tap(res=>{
+    //     if(res==4){
+    //       subSubscription.unsubscribe();
+    //     }
+    //   }),
+    //   map(data=>arry[data])
+    // ).subscribe(res=>console.log(res))
 
     
     // usertime.pipe(
@@ -72,13 +79,17 @@ export class EmployeeComponent implements OnInit {
     //   )
     //   ).subscribe(res=>console.log(res))
 
-    from(this.users).pipe(
-      pluck('name'),
-      toArray()
-    ).subscribe(res=>{console.log(res)})
+    // from(this.users).pipe(
+    //   pluck('name'),
+    //   toArray()
+    // ).subscribe(res=>{console.log(res)})
 
-   this.mergeMapExample();
-   this.forkJoinExample()
+  // this.mergeMapExample();
+  // this.forkJoinExample();
+  // this.rendondata()
+   //  this.raceCondition()
+  // this.threeapi()
+  this.concatMap()
   }
   
   mergeMapExample(){
@@ -98,18 +109,67 @@ export class EmployeeComponent implements OnInit {
        this.productSecond = finloutput.response2;
      })
   }
-
+  threeapi(){
+     this.practiceservice.firstapi().pipe(
+      
+      mergeMap(res1=>{
+        console.log(res1)
+      
+       return this.practiceservice.secondapi().pipe(delay(3000),
+       
+       )
+    
+      }
+      
+      )
+      
+    ).subscribe(res=>{console.log(res)})
+    
+  
+  }
   forkJoinExample(){
     const firstData = this.practiceservice.firstapi();
     const secondData = this.practiceservice.secondapi();
-
+  
+    
     forkJoin([firstData,secondData]).subscribe(res=>{
-      console.log('forkJoin',res);
+    
       this.productFirst = res[0];
       this.productSecond = res[1];
-      console.log(this.productFirst);
-      console.log(this.productSecond);
+      console.log('firstResponse',this.productFirst);
+      console.log('secondResponse',this.productSecond);
+      this.practiceservice.thirdapi().subscribe(res=>{console.log('thirdResponse',res)})
     })
+      
+  
   }
+
+  
+
+  raceCondition(){
+    const first =  this.practiceservice.firstapi().pipe(delay(5000),map(i => console.log(i)));
+    const second = this.practiceservice.secondapi().pipe(delay(9000),map(i => console.log(i)));
+    const third = this.practiceservice.thirdapi().pipe(map(i => console.log(i)));
+    
+    first.pipe(
+      flatMap(() => second),
+      flatMap(() => third)
+
+    )
+      .subscribe((res)=> console.log('finished',res));
+  }
+
+  concatMap(){
+    const first =  this.practiceservice.firstapi().pipe(delay(5000));
+    const second = this.practiceservice.secondapi().pipe(delay(9000));
+    const third = this.practiceservice.thirdapi()
+    first.pipe(
+      concatMap(
+        res => second
+        
+      )
+    ).subscribe(res=>console.log(res))
+  }
+ 
 
 }
