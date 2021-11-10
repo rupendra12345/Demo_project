@@ -1,0 +1,130 @@
+<div class="wrapper">
+  {{businessPartnerSettings | json}}
+  <!--default org-->
+  <div style="margin-bottom: 10px">
+    <div class="df ai mt" style="margin-bottom: 20px">
+      <div class="dot"></div>
+      <div class="fw" style="letter-spacing: 0.05em">ORGANIZATION SETTINGS</div>
+    </div>
+    <div class="setting-box">
+      <div class="df ai">
+        <button mat-icon-button>
+          <mat-icon style="color: #8c9ba5">drag_indicator</mat-icon>
+        </button>
+        <div class="block">
+          <div class="lf fw" style="color: #3d70b2">Organization Default</div>
+          <div class="df ai" style="margin-top: 3px">
+            <!-- <span class="dt"
+              >{{ settingObj?.OrgDefault[0]?.settings }}</span
+            > -->
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          class="pc"
+          style="margin-left: auto"
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            class="df ai per"
+            
+            (click)="editProfile('ORGANIZATION', settingOrgObj)"
+          >
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+          <button
+            mat-menu-item
+            class="df ai per"
+            
+            (click)="
+              deleteSetting('ORGANIZATION', settingObj?.OrgDefault[0]?.uuid)
+            "
+            *ngIf="settingObj?.OrgDefault && settingObj?.OrgDefault[0]?.uuid"
+          >
+            reset To default
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div style="margin-bottom: 10px">
+    <div class="df ai mt" style="margin-bottom: 20px">
+      <div class="dot"></div>
+      <div class="fw" style="letter-spacing: 0.05em">PARTNER TYPE</div>
+      <div
+        style="margin-left: auto"
+        *ngIf="
+        !(settingObj?.PartnerType && settingObj?.PartnerType?.length >= 2)
+      "
+      >
+        <button
+          mat-button
+          class="mf btn"
+         
+          (click)="addNewSetting('TYPE')"
+        >
+          <mat-icon>add_circle</mat-icon>
+          <span style="margin-left: 10px">New Setting</span>
+        </button>
+      </div>
+    </div>
+    <div class="setting-box" *ngFor="let type of settingObj?.PartnerType">
+      <div class="df ai">
+        <button mat-icon-button>
+          <mat-icon style="color: #8c9ba5">drag_indicator</mat-icon>
+        </button>
+        <div class="block">
+          <div class="lf fw" style="color: #3d70b2">
+            {{
+              type?.overrideFor[0]?.objectIdentifier === "vendor"
+                ? "Vendor"
+                : "Customer"
+            }}
+          </div>
+          <div class="df ai" style="margin-top: 3px">
+            <!-- <span class="dt"
+              >{{ settingObj?.OrgDefault[0]?.settings }}</span
+            > -->
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          class="pc"
+          style="margin-left: auto"
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerFor]="typeMenu"
+        >
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #typeMenu="matMenu">
+          <button
+            mat-menu-item
+            class="df ai per"
+            
+            (click)="editProfile('TYPE', type)"
+          >
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+          <button
+            mat-menu-item
+            class="df ai per"
+            
+            (click)="deleteSetting('TYPE', type.uuid)"
+          >
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </mat-menu>
+        
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
@@ -39,6 +40,10 @@ import { NewCustomFieldEditorComponent } from './new-custom-field-editor/new-cus
 import { NewCustomFieldViewerComponent } from './new-custom-field-viewer/new-custom-field-viewer.component';
 import { BusinessPartnerService } from './servive/business-partner.service';
 import { BusinessPartnerPipe } from './pipe/business-partner.pipe';
+import { BusinessPartnerGroupSettingComponent } from './partner-setting/business-partner-group-setting/business-partner-group-setting.component';
+import { PartnerAddSettingPopupComponent } from './partner-setting/partner-add-setting-popup/partner-add-setting-popup.component';
+import { BusinessPartnerAddSettingComponent } from './partner-setting/business-partner-add-setting/business-partner-add-setting.component';
+import { DriverComponent } from './driver/driver.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,8 +54,13 @@ import { BusinessPartnerPipe } from './pipe/business-partner.pipe';
     NewCustomFieldEditorComponent,
     NewCustomFieldViewerComponent,
     BusinessPartnerPipe,
+    BusinessPartnerGroupSettingComponent,
+    PartnerAddSettingPopupComponent,
+    BusinessPartnerAddSettingComponent,
+    DriverComponent,
+    
   ],
-  entryComponents: [DialogBodyComponent, BusinessPartnerDialogComponent],
+  entryComponents: [DialogBodyComponent, BusinessPartnerDialogComponent,PartnerAddSettingPopupComponent,BusinessPartnerAddSettingComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -68,6 +78,7 @@ import { BusinessPartnerPipe } from './pipe/business-partner.pipe';
     MatSelectModule,
     MatIconModule,
     MatCheckboxModule,
+    MatSnackBarModule,
     StoreModule.forRoot(reducer, {
       metaReducers,
     }),
@@ -94,6 +105,7 @@ import { BusinessPartnerPipe } from './pipe/business-partner.pipe';
     ChartsModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [BusinessPartnerService, HttpClient],
   bootstrap: [AppComponent],

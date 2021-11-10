@@ -27,6 +27,13 @@ export class UsersComponent implements OnInit,AfterViewInit{
   skip:number = 0;
   customFields$: Observable<any[]>;
   customFields: any[];
+  uniqueConditions: any[] = [];
+  businessPartnerSettingDetails: any = {
+    OrgDefault: null,
+    PartnerType: null,
+    PartnerGroup: null,
+    CompanyType: null,
+  };
   constructor(private store: Store,private matDialog: MatDialog, private service:BusinessPartnerService) { }
 
   myControl: FormControl = new FormControl();
@@ -41,7 +48,7 @@ export class UsersComponent implements OnInit,AfterViewInit{
   ngOnInit(): void {
     this.store.dispatch(new UserActions.FetchBpCustomFieldsAction(null));
     this.customFields$ = this.store.select(bpCustomFieldSelector).pipe(
-      tap((cf) =>{ (this.customFields = cf), console.log('cf',this.customFields)}),
+      tap((cf) => (this.customFields = cf)),
       
       shareReplay(1)   
     );
@@ -59,8 +66,105 @@ export class UsersComponent implements OnInit,AfterViewInit{
         this.errorMessage = err;
       }
     )
-
+  this.getUniqueContraintList();
+  // this.getBusinessPartnerSetting()
+  // this.updatedPartnerSetting();
   }
+  // updatedPartnerSetting() {
+    
+  //   this.service
+  //     .getPartnerSetting()
+  //     .subscribe((obj: any) => {
+  //       console.log('abcd',obj);
+  //       this.businessPartnerSettingDetails = obj;
+  //    console.log('updatedPartnerSetting',this.businessPartnerSettingDetails)
+       
+  //     });
+
+     
+  // }
+  getUniqueContraintList() {
+    this.service
+      .getUniquenessContraints()
+      .subscribe((res: any) => {
+        if (res.status === 200) {
+          res.data["DEFAULT"] = null;
+          this.uniqueConditions = Object.keys(res.data).map((item) => ({
+            key: item,
+            value: res.data[item],
+          }));
+        } else {
+          this.service.openSnackBar(res.error);
+        }
+      })
+
+}
+// deleteSetting(obj: any) {
+
+//     this.service
+//       .deletePartnerSetting(obj.id)
+//       .subscribe((res: any) => {
+//         if (res.status == 200) {
+//           if (obj.type === "TYPE") {
+//             let index = this.businessPartnerSettingDetails.PartnerType.findIndex(
+//               (i) => i.uuid === obj.id
+//             );
+//             if (index !== -1)
+//               this.businessPartnerSettingDetails.PartnerType.splice(index, 1);
+//           }
+//           if (obj.type === "GROUP") {
+//             let index = this.businessPartnerSettingDetails.PartnerGroup.findIndex(
+//               (i) => i.uuid === obj.id
+//             );
+//             if (index !== -1)
+//               this.businessPartnerSettingDetails.PartnerGroup.splice(
+//                 index,
+//                 1
+//               );
+//           }
+//           if (obj.type === "COMPANY") {
+//             let index = this.businessPartnerSettingDetails.CompanyType.findIndex(
+//               (i) => i.uuid === obj.id
+//             );
+//             if (index !== -1)
+//               this.businessPartnerSettingDetails.CompanyType.splice(index, 1);
+//           }
+//           if (obj.type === "ORGANIZATION") this.getBusinessPartnerSetting();
+//           this.service.openSnackBar(
+//             `Partner setting ${
+//               obj.type === "ORGANIZATION" ? "reset to default" : "deleted"
+//             } successfully !.`
+//           );
+//         } else {
+//           this.service.openSnackBar(res.error);
+//         }
+//       })
+
+// }
+  // createSetting(obj) {
+  //   console.log('createSetting')
+  //     this.service
+  //       .createPartnerSetting(obj)
+  //       .subscribe((res: any) => {
+  //         console.log('partnerSetting',res)
+  //         if (res.status === 200) {
+  //           this.getBusinessPartnerSetting();
+  //           if (obj.uuid)
+  //             this.service.openSnackBar(
+  //               "Partner Setting Updated Successfully"
+  //             );
+  //           else
+  //             this.service.openSnackBar(
+  //               "Partner Setting Created Successfully"
+  //             );
+  //         } else {
+  //           this.service.openSnackBar(res.error);
+  //         }
+  //       })
+  
+  // }
+  
+  
   addCustomFields() {
     let dialogRef = this.matDialog.open(
       BusinessPartnerDialogComponent,
@@ -116,7 +220,7 @@ export class UsersComponent implements OnInit,AfterViewInit{
     tiles.addTo(this.map);
   }
   ngAfterViewInit(): void {
-    this.initMap();
+    // this.initMap();
   }
 
   openDialog() {

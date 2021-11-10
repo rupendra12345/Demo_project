@@ -1,0 +1,50 @@
+
+    
+<div class="driver-search-block">
+    <div class="search-input-container" id="searchMobView">
+        <input #searchDriver class="search-driver-item" [(ngModel)]="searchKey" placeholder="search by Driver Name" />
+        <mat-icon class="search-icon" style="color: #8C9BA5;">search</mat-icon>
+        <mat-icon class="close-icon" style="color: #8C9BA5;">close</mat-icon>
+    </div>
+    <!-- <div class="search-mob-view" id="searchItemView" (click)="openSearchBar()">
+        <mat-icon style="margin-top:5px;color: #0086DA;">search</mat-icon>
+      </div> -->
+</div>
+
+<div class="driver-heading-view">
+    <span>Driver Name</span>
+    <span>Contact No.</span>
+    <span>Driving License</span>
+    <span>License Expires</span>
+    <span>Assign To</span>
+    <span>Branch</span>
+    
+    
+</div>
+{{(driverList$ | async)?.length}}
+<div  #scroll style="height: calc(100vh - 16.2rem); overflow-x: hidden; overflow-y: auto">
+    
+    <div >
+    <div class="driver-list-view-block" *ngFor="let driver of driverList$ | async" >
+        <div class="driver-name tx">
+            
+            <div class="df fdc tx" style="flex: 1;">
+                <span class="driver-values tx">{{driver?.name}}</span>
+                <span class="mt sf" style="margin-top: 5px;">{{driver?.externalId}}</span>
+            </div>
+        </div>
+        <span class="driver-values tx">{{driver?.mobileNumber}}</span>
+        <span class="driver-values tx">{{driver?.dlNumber}}</span>
+        <span class="driver-values tx">{{driver?.dlExpiryTime | date:'dd MMM, yyyy'}}</span>
+        <div class="driver-assign-vehicle">
+            <span *ngIf="(driver?.vehicleRegistrationNumber && driver?.vehicleId)"
+                class="vehicle-registration-no">{{driver?.vehicleRegistrationNumber}}</span>
+           
+        </div>
+        <span class="mf tx" style="flex: 2;">{{ driver?.branch ? driver?.branch?.name : 'N/A'}}</span>
+    </div>
+    </div>
+    
+</div>
+
+

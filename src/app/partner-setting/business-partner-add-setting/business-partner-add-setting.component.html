@@ -1,0 +1,272 @@
+<!--header-->
+<div class="dialog-header">
+    <span class="dt">Business Partner / New Settings</span>
+    <button mat-icon-button mat-dialog-close style="margin-left: auto">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <!--body-->
+  <div class="dialog-body" style="width: 600px; height: 60vh">
+    <!--table header-->
+    <div class="df ai table-hc header-sticky">
+      <div style="width: 40%" class="lf fw">Fields</div>
+      <div style="width: 20%" class="lf fw">Mandatory On Create</div>
+      <div style="width: 20%" class="lf fw">Mandatory On Verification</div>
+      <div style="width: 20%" class="lf fw">Required Re-verification</div>
+    </div>
+    <!--table content-->
+    <div
+      class="df ai table-hc"
+      *ngFor="let fields of partnerFields; let index = index"
+    >
+      <div style="width: 40%" class="fdc">
+        <div class="mf dt fw">{{ fields?.fieldName }}</div>
+        <div class="mf mt">{{ fields?.description }}</div>
+      </div>
+      <div style="width: 20%">
+        <span (click)="$event.stopPropagation()">
+          <mat-icon
+            class="texture-icon cp"
+            [matMenuTriggerFor]="createMenu"
+            *ngIf="fields.mandateOnCreate === null"
+            >texture</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="createMenu"
+            *ngIf="fields.mandateOnCreate === true"
+            >check_box</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="createMenu"
+            *ngIf="fields.mandateOnCreate === false"
+            >check_box_outline_blank</mat-icon
+          >
+        </span>
+      </div>
+      <div style="width: 20%">
+        <span (click)="$event.stopPropagation()">
+          <mat-icon
+            class="texture-icon cp"
+            [matMenuTriggerFor]="verificationMenu"
+            *ngIf="fields.mandateOnVerification === null"
+            >texture</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="verificationMenu"
+            *ngIf="fields.mandateOnVerification === true"
+            >check_box</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="verificationMenu"
+            *ngIf="fields.mandateOnVerification === false"
+            >check_box_outline_blank</mat-icon
+          >
+        </span>
+      </div>
+      <div style="width: 20%">
+        <span (click)="$event.stopPropagation()">
+          <mat-icon
+            class="texture-icon cp"
+            [matMenuTriggerFor]="reVerificationMenu"
+            *ngIf="fields.mandateOnReVerification === null"
+            >texture</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="reVerificationMenu"
+            *ngIf="fields.mandateOnReVerification === true"
+            >check_box</mat-icon
+          >
+          <mat-icon
+            class="checkbox-icon cp"
+            [matMenuTriggerFor]="reVerificationMenu"
+            *ngIf="fields.mandateOnReVerification === false"
+            >check_box_outline_blank</mat-icon
+          >
+        </span>
+      </div>
+      <!--mandate on create-->
+      <mat-menu #createMenu="matMenu">
+        <div class="menu-options">
+          <span
+            class="df ai mb-2"
+            (click)="(fields.mandateOnCreate = null)"
+            [ngClass]="{ selected: fields.mandateOnCreate === null }"
+            *ngIf="!isForChild"
+          >
+            <mat-icon class="texture-icon" style="color: #3d70b2"
+              >texture</mat-icon
+            >
+            &nbsp;&nbsp;Default
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnCreate === null"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai mb-2"
+            (click)="fields.mandateOnCreate = true"
+            [ngClass]="{ selected: fields.mandateOnCreate === true }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box</mat-icon
+            >&nbsp;&nbsp;Enable
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnCreate === true"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai mb-2"
+            (click)="fields.mandateOnCreate = false"
+            [ngClass]="{ selected: fields.mandateOnCreate === false }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box_outline_blank</mat-icon
+            >
+            &nbsp;&nbsp;Disable
+  
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnCreate === false"
+              >done</mat-icon
+            ></span
+          >
+        </div>
+      </mat-menu>
+      <!--mandate on verification-->
+      <mat-menu #verificationMenu="matMenu">
+        <div class="menu-options">
+          <span
+            class="df ai"
+            (click)="(fields.mandateOnVerification = null)"
+            [ngClass]="{ selected: fields.mandateOnVerification === null }"
+            *ngIf="!isForChild"
+          >
+            <mat-icon class="texture-icon" style="color: #3d70b2"
+              >texture</mat-icon
+            >
+            &nbsp;&nbsp;Default
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnVerification === null"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai"
+            (click)="fields.mandateOnVerification = true"
+            [ngClass]="{ selected: fields.mandateOnVerification === true }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box</mat-icon
+            >&nbsp;&nbsp;Enable
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnVerification === true"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai"
+            (click)="fields.mandateOnVerification = false"
+            [ngClass]="{ selected: fields.mandateOnVerification === false }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box_outline_blank</mat-icon
+            >
+            &nbsp;&nbsp;Disable
+  
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnVerification === false"
+              >done</mat-icon
+            ></span
+          >
+        </div>
+      </mat-menu>
+      <!--mandate on re-verification-->
+      <mat-menu #reVerificationMenu="matMenu">
+        <div class="menu-options">
+          <span
+            class="df ai"
+            (click)="(fields.mandateOnReVerification = null)"
+            [ngClass]="{ selected: fields.mandateOnReVerification === null }"
+            *ngIf="!isForChild"
+          >
+            <mat-icon class="texture-icon" style="color: #3d70b2"
+              >texture</mat-icon
+            >
+            &nbsp;&nbsp;Default
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnReVerification === null"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai"
+            (click)="fields.mandateOnReVerification = true"
+            [ngClass]="{ selected: fields.mandateOnReVerification === true }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box</mat-icon
+            >&nbsp;&nbsp;Enable
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnReVerification === true"
+              >done</mat-icon
+            >
+          </span>
+          <span
+            class="df ai"
+            (click)="fields.mandateOnReVerification = false"
+            [ngClass]="{ selected: fields.mandateOnReVerification === false }"
+            ><mat-icon class="checkbox-icon" style="color: #3d70b2"
+              >check_box_outline_blank</mat-icon
+            >
+            &nbsp;&nbsp;Disable
+  
+            <mat-icon
+              style="margin-left: auto; color: #0086da"
+              *ngIf="fields.mandateOnReVerification === false"
+              >done</mat-icon
+            ></span
+          >
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+  <!--uniqueness condition-->
+  <div class="df ai">
+    <div class="input-border">
+      <label class="mf dt">Uniqueness Condition</label>
+      <mat-select
+        class="input-box mf dt"
+        style="padding-top: 14px"
+        placeholder="Select Uniqueness Condition"
+        [value]="selectedUniqueContraint[0]?.key"
+      >
+        <mat-option
+          *ngFor="let condition of data?.uniqueConditions"
+          [value]="condition.key"
+          (click)="selectedUniqueCondition(condition)"
+          >{{ condition?.key }}</mat-option
+        >
+      </mat-select>
+    </div>
+  </div>
+  <!--footer-->
+  <div class="df ai" style="padding: 16px; justify-content: flex-end">
+    <button
+      mat-button
+      style="background-color: #e5f2ff"
+      class="pc"
+      mat-dialog-close
+    >
+      Cancel
+    </button>
+    <button mat-button class="active-button" (click)="onSave()">Save</button>
+  </div>
+  

@@ -1,0 +1,49 @@
+<div class="dialog-header">
+    <span class="dt">Load Planning Status</span>
+    <button mat-icon-button mat-dialog-close style="margin-left: auto">
+      <mat-icon>clear</mat-icon>
+    </button>
+</div>
+<div
+  class="dialog-body"
+  style="width: 500px; height: 15vh"
+  *ngIf="data.type === 'TYPE'"
+>
+  <div class="df fdc" style="padding: 10px 0px">
+    <label class="mf mt">Select Partner Type</label>
+    <div class="input-border">
+      <mat-select
+        class="input-box mf dt"
+        style="padding-top: 14px"
+        placeholder="Select Partner Type"
+        [(ngModel)]="selectedPartner"
+        required
+      >
+        <mat-option
+          value="vendor"
+          [disabled]="selectedPartnerType.includes('vendor')"
+          >Vendor</mat-option
+        >
+        <mat-option
+          value="customer"
+          [disabled]="selectedPartnerType.includes('customer')"
+          >Customer</mat-option
+        >
+      </mat-select>
+    </div>
+  </div>
+</div>
+<div class="df ai jc" style="padding: 16px">
+    <button mat-button class="pc" mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      [ngClass]="
+        selectedPartner?.length>0
+          ? 'active-button'
+          : 'disable-button'
+      "
+      (click)="proceed()"
+    >
+      Proceed
+    </button>
+</div>

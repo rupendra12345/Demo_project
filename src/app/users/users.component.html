@@ -1,10 +1,10 @@
 
-<div class="row">
-  <div class="col-md-2 text-center vertical-line">
-    <h4 class="mt-2" style="color: blue;">Business Partner</h4>
-  </div>
+<div class="container">
+   <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Business Partner( custom field and partner setting implementation)</h5>
+   <hr>
   
-  <div class="col-md-10">
+  
+  
     <mat-tab-group>
       <mat-tab label="Custom Field">
         <button
@@ -71,13 +71,25 @@
       </div>
       </mat-tab>
       <mat-tab label="Partner Group">Content 2</mat-tab>
-      <mat-tab label="Partner Setting">Content 3</mat-tab>
+      <mat-tab label="Partner Setting">
+        <app-business-partner-group-setting>
+          
+        </app-business-partner-group-setting>
+      </mat-tab>
       <mat-tab label="Partner Report">Content 4</mat-tab>
     </mat-tab-group>
-  </div>
+
 </div>
+
 <div class="container">
-  <h5 style="font-size:15px" class="mt-4">NGRX Demo Project</h5>
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Driver(Load more and search implmantation by rxjs)</h5>
+  <hr>
+<app-driver></app-driver>
+  
+</div> 
+ 
+<div class="container">
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">NGRX Demo Project</h5>
   <hr>
 <div class='card'>
     <div class='card-header'>
@@ -119,7 +131,7 @@
     Error: {{ errorMessage }}
   </div>
 
-  <h5 style="font-size:15px" class="mt-4">Angular Material Form Fields</h5>
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Angular Material Form Fields</h5>
   <hr>
   <div class="example-container">
     <mat-form-field>
@@ -136,7 +148,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <h5 style="font-size:15px" class="mt-4">Angular Material Tab</h5>
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Angular Material Tab</h5>
   <hr>
   <mat-tab-group>
     <mat-tab label="Tab 1">Content 1</mat-tab>
@@ -156,7 +168,7 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <h5 style="font-size:15px" class="mt-4">Angular Material Menu</h5>
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Angular Material Menu</h5>
   <hr>
   <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
   <mat-menu #menu="matMenu">
@@ -164,7 +176,7 @@
     <button mat-menu-item>Item 2</button>
   </mat-menu>
   
-<h5 style="font-size:15px" class="mt-4">Angular Material Dialog</h5>
+<h5 style="font-size:15px;font-weight: 500;" class="mt-4">Angular Material Dialog</h5>
   <hr>
   <button mat-raised-button color="primary" (click)="openDialog()">Open dialog</button>
   <!-- <h5 style="font-size:15px" class="mt-4">Leaflat Map</h5>
@@ -175,7 +187,7 @@
     </div>
   
   </div> -->
-  <h5 style="font-size:15px" class="mt-4">Chart</h5>
+  <h5 style="font-size:15px;font-weight: 500;" class="mt-4">Chart</h5>
   <hr>
   <div>
     <div style="display: block">
